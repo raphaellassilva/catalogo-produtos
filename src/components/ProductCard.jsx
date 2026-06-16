@@ -1,5 +1,7 @@
+// Importa Link para navegação ao clicar no card
 import { Link } from 'react-router-dom'
 
+// Mapeamento de cores por categoria para os badges coloridos
 const CATEGORY_COLORS = {
   Smartphones: 'bg-violet-500/20 text-violet-300 border-violet-500/30',
   Notebooks: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
@@ -9,24 +11,33 @@ const CATEGORY_COLORS = {
   Games: 'bg-red-500/20 text-red-300 border-red-500/30',
 }
 
+// Componente de card individual que exibe resumo de um produto
 export default function ProductCard({ produto }) {
+  // Pega a cor da categoria ou usa cinza como padrão
   const categoryStyle =
     CATEGORY_COLORS[produto.categoria] ||
     'bg-gray-500/20 text-gray-300 border-gray-500/30'
 
   return (
+    // Link que leva para a página de detalhes do produto
     <Link to={`/produto/${produto.id}`} className="group block">
       <div className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-500/10 transition-all duration-300">
+
+        {/* Área da imagem do produto */}
         <div className="relative bg-gray-800 h-48 flex items-center justify-center overflow-hidden">
           {produto.imagem ? (
+            // Exibe a imagem se existir, com zoom suave ao passar o mouse
             <img
               src={produto.imagem}
               alt={produto.nome}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           ) : (
+            // Ícone padrão quando não há imagem
             <span className="text-6xl">🖥️</span>
           )}
+
+          {/* Badge colorido com a categoria do produto */}
           <span
             className={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded-full border ${categoryStyle}`}
           >
@@ -34,6 +45,7 @@ export default function ProductCard({ produto }) {
           </span>
         </div>
 
+        {/* Informações do produto: nome, descrição e preço */}
         <div className="p-4">
           <h3 className="font-semibold text-gray-100 group-hover:text-violet-300 transition-colors line-clamp-1">
             {produto.nome}
@@ -42,6 +54,7 @@ export default function ProductCard({ produto }) {
             {produto.descricao}
           </p>
           <div className="mt-3 flex items-center justify-between">
+            {/* Preço formatado em reais */}
             <span className="text-lg font-bold text-cyan-400">
               R${' '}
               {Number(produto.preco).toLocaleString('pt-BR', {

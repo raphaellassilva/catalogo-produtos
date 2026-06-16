@@ -3,12 +3,22 @@ import { useParams, Link } from 'react-router-dom'
 import { getProdutoById } from '../api/produtos'
 import ProductDetail from '../components/ProductDetail'
 
+// Página de detalhes de um produto específico
+// O ID do produto vem pelo parâmetro da URL (/produto/:id)
 export default function ProductPage() {
+  // Extrai o ID da URL usando o hook useParams
   const { id } = useParams()
+
+  // Estado do produto carregado da API
   const [produto, setProduto] = useState(null)
+
+  // Estado de loading durante a busca
   const [loading, setLoading] = useState(true)
+
+  // Estado de erro caso o produto não seja encontrado
   const [error, setError] = useState(null)
 
+  // Busca o produto pelo ID quando o componente é montado ou o ID muda
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,6 +33,7 @@ export default function ProductPage() {
     fetchData()
   }, [id])
 
+  // Exibe skeleton loading enquanto carrega
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -41,6 +52,7 @@ export default function ProductPage() {
     )
   }
 
+  // Exibe mensagem de erro se o produto não existir
   if (error) {
     return (
       <div className="text-center py-20">
@@ -53,5 +65,6 @@ export default function ProductPage() {
     )
   }
 
+  // Renderiza o componente de detalhe com os dados do produto
   return <ProductDetail produto={produto} />
 }

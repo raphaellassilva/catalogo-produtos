@@ -1,9 +1,15 @@
+// Importa o componente de card individual
 import ProductCard from './ProductCard'
 
+// Componente que renderiza a grade de produtos
+// Recebe a lista de produtos, estado de loading e mensagem de erro
 export default function ProductList({ produtos, loading, error }) {
+
+  // Exibe skeleton loading enquanto os dados estão sendo carregados
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Gera 8 cards de placeholder animados */}
         {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
@@ -21,6 +27,7 @@ export default function ProductList({ produtos, loading, error }) {
     )
   }
 
+  // Exibe mensagem de erro caso a requisição falhe
   if (error) {
     return (
       <div className="text-center py-20">
@@ -34,6 +41,7 @@ export default function ProductList({ produtos, loading, error }) {
     )
   }
 
+  // Exibe mensagem quando não há produtos cadastrados ou filtrados
   if (produtos.length === 0) {
     return (
       <div className="text-center py-20">
@@ -46,9 +54,11 @@ export default function ProductList({ produtos, loading, error }) {
     )
   }
 
+  // Renderiza a grade de cards com os produtos disponíveis
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {produtos.map((produto) => (
+        // Cada card recebe o produto como prop e usa o id como key
         <ProductCard key={produto.id} produto={produto} />
       ))}
     </div>
